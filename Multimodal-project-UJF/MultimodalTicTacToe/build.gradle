@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.0.6'
+    }
+}
+
+apply plugin: 'org.javafxports.jfxmobile'
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    jcenter()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+// Variables pour les librairies
+ext {
+    CHARM_DOWN_VERSION = "1.0.0"
+    SPHINX_VERSION = "5prealpha-SNAPSHOT"
+}
+
+dependencies {
+    compile files('lib/lipermi-0.4.2.jar')
+    desktopCompile "edu.cmu.sphinx:sphinx4-core:$SPHINX_VERSION"
+    desktopCompile "edu.cmu.sphinx:sphinx4-data:$SPHINX_VERSION"
+    compile "com.gluonhq:charm-down-common:$CHARM_DOWN_VERSION"
+    desktopRuntime "com.gluonhq:charm-down-desktop:$CHARM_DOWN_VERSION"
+    androidRuntime "com.gluonhq:charm-down-android:$CHARM_DOWN_VERSION"
+    iosCompile "org.robovm:robovm-cocoatouch:1.0.0"
+    iosRuntime "com.gluonhq:charm-down-ios:$CHARM_DOWN_VERSION"
+}
+
+// Variables pour la classe principale
+ext {
+    main = "com.multimodaltictactoe.MultimodalTicTacToe"
+    boardGUITest = "com.multimodaltictactoe.test.boardgui.BoardGUITest"
+    lipeRmiTest = "com.multimodaltictactoe.test.lipermi.LipeRmiTest"
+    platformTest = "com.multimodaltictactoe.test.platform.PlatformTest"
+    logicTest = "com.multimodaltictactoe.test.logic.TestLogic"
+    screenAdaptTest = "com.multimodaltictactoe.test.screenAdapt.ScreenAdaptTest"
+    voiceTest = "com.multimodaltictactoe.test.voice.VoiceTest"
+    infosTest = "com.multimodaltictactoe.test.infosgui.InfosTest"
+    lipeRmi2Test = "com.multimodaltictactoe.test.lipermi2.LipeRmi2Test"
+}
+
+mainClassName = main
+
+jfxmobile {
+    android {        
+        manifest = 'lib/android/AndroidManifest.xml'
+        androidSdk = androidSdkLocation
+    }
+    ios {
+        forceLinkClasses = [ 'com.multimodaltictactoe.**.*', 'com.gluonhq.charm.down.**.*' ]
+    }
+}
+

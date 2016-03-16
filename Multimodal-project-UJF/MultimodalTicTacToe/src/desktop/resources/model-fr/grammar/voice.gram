@@ -1,0 +1,14 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Hello World example
+ */
+
+grammar voice;
+
+<col> = (a | b | c);
+<line> = (un | deux | trois);
+<cell> = (<col> <line>) | (<line> <col>);
+<verb> = (jouer | placer);
+<term> = (en | sur);
+public <command> = <verb> [<term>] <cell>;
